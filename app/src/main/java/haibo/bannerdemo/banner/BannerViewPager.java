@@ -1,6 +1,8 @@
 package haibo.bannerdemo.banner;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -15,7 +17,18 @@ import android.view.ViewGroup;
  */
 
 public class BannerViewPager extends ViewPager {
+    private static final int SCROLL_MSG = 0X0011;
+    //默认的滚动轮询时间
+    private int mCutDownTime = 1500;
+
     private BannerAdapter mBannerAdapter;
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            setCurrentItem(getCurrentItem() + 1);
+            startRoll();
+        }
+    };
 
     public BannerViewPager(Context context) {
         super(context);
@@ -25,13 +38,34 @@ public class BannerViewPager extends ViewPager {
         super(context, attrs);
     }
 
-
+    /**
+     * 自定义BannerAdapter
+     *
+     * @param adapter
+     */
     public void setAdapter(BannerAdapter adapter) {
         this.mBannerAdapter = adapter;
         //设置ViewPager的Adapter
         setAdapter(new BannerPagerAdapter());
     }
 
+    /**
+     * 开启滚动
+     */
+    public void startRoll() {
+        mHandler.removeMessages(SCROLL_MSG);
+        mHandler.sendEmptyMessageDelayed(SCROLL_MSG, mCutDownTime);
+    }
+
+    /**
+     * 销毁handler ,防止内存泄露
+     */
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mHandler.removeMessages(SCROLL_MSG);
+        mHandler = null;
+    }
 
     private class BannerPagerAdapter extends PagerAdapter {
 
