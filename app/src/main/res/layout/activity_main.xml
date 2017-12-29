@@ -19,4 +19,16 @@
         android:id="@+id/ed_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:text="倒计时"/>
+    <Button
+        android:id="@+id/pause"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:text="暂停"/>
+
 </LinearLayout>

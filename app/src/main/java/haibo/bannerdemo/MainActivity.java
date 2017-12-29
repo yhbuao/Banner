@@ -1,16 +1,14 @@
 package haibo.bannerdemo;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.regex.Matcher;
@@ -26,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     private BannerViewPager mBannerViewPager;
     private EditText mEditText;
+    private Button mButton;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mBannerViewPager = ((BannerViewPager) findViewById(R.id.bannerViewPager));
         mEditText = ((EditText) findViewById(R.id.ed_text));
-
+        mButton = ((Button) findViewById(R.id.bt));
         mBannerViewPager.setAdapter(new BannerAdapter() {
             @Override
             public View getView(int position) {
@@ -45,21 +45,39 @@ public class MainActivity extends AppCompatActivity {
         //开启自动滚动
         mBannerViewPager.startRoll();
 
-        mEditText.setFilters(new InputFilter[]{inputFilter,new InputFilter.LengthFilter(12)});
+        mEditText.setFilters(new InputFilter[]{inputFilter, new InputFilter.LengthFilter(12)});
 
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.addView(new TextView(this));
-        linearLayout.addView(new Button(this));
-        linearLayout.addView(new EditText(this));
-        linearLayout.addView(new ImageButton(this));
-        linearLayout.removeViews(1,4-1);
-        int childCount = linearLayout.getChildCount();
+        countDownTimer = new CountDownTimer(20000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mButton.setText(millisUntilFinished / 1000 + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(MainActivity.this, "结束啦", Toast.LENGTH_SHORT).show();
+            }
+        };
+        //倒计时按钮点击事件
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countDownTimer.start();
+            }
+        });
+        //暂停倒计时
+        ((Button) findViewById(R.id.pause)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countDownTimer.cancel();
+            }
+        });
+
     }
 
     InputFilter mInputFilter = new InputFilter() {
         Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
                 Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
-
 
         @Override
         public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
@@ -72,15 +90,16 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    InputFilter inputFilter=new InputFilter() {
+    InputFilter inputFilter = new InputFilter() {
 
         Pattern pattern = Pattern.compile("[^a-zA-Z0-9\\u4E00-\\u9FA5_]");
+
         @Override
         public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
-            Matcher matcher=  pattern.matcher(charSequence);
-            if(!matcher.find()){
+            Matcher matcher = pattern.matcher(charSequence);
+            if (!matcher.find()) {
                 return null;
-            }else{
+            } else {
                 Toast.makeText(MainActivity.this, "只能输入汉字,英文，数字", Toast.LENGTH_LONG).show();
                 return "";
             }
