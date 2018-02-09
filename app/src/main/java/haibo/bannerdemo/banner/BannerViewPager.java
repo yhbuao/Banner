@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Field;
+
 /**
  * @author: yuhaibo
  * @time: 2017/12/28 11:37.
@@ -18,24 +20,39 @@ import android.view.ViewGroup;
 
 public class BannerViewPager extends ViewPager {
     private static final int SCROLL_MSG = 0X0011;
-    //默认的滚动轮询时间
-    private int mCutDownTime = 1500;
-
     private BannerAdapter mBannerAdapter;
+    //默认的滚动轮询时间
+    private int mCutDownTime = 5000;
+    //改变viewpager切换速率 自定义
+    private BannerScroller mScroller;
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             setCurrentItem(getCurrentItem() + 1);
+            //循环执行
             startRoll();
         }
     };
 
     public BannerViewPager(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public BannerViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        //改变viewpager切换的速率
+        //duration持续时间 是viewpager源码中局部变量通过反射拿到这个
+        try {
+            Field field = ViewPager.class.getDeclaredField("mScroller");
+            //设置参数 第一个Object代表设置的属性在那个类 第二个Object代表要设置的值
+            mScroller = new BannerScroller(context);
+            //设置强制改变private属性
+            field.setAccessible(true);
+            field.set(this, mScroller);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -53,6 +70,7 @@ public class BannerViewPager extends ViewPager {
      * 开启滚动
      */
     public void startRoll() {
+        //清除消息
         mHandler.removeMessages(SCROLL_MSG);
         mHandler.sendEmptyMessageDelayed(SCROLL_MSG, mCutDownTime);
     }
@@ -65,6 +83,15 @@ public class BannerViewPager extends ViewPager {
         super.onDetachedFromWindow();
         mHandler.removeMessages(SCROLL_MSG);
         mHandler = null;
+    }
+
+    /**
+     * 设置页面切换的时间
+     *
+     * @param scrollerDuration
+     */
+    public void setBannerScroller(int scrollerDuration) {
+        mScroller.setScrollerDuration(scrollerDuration);
     }
 
     private class BannerPagerAdapter extends PagerAdapter {

@@ -21,7 +21,6 @@ import haibo.bannerdemo.banner.BannerViewPager;
  * @author User
  */
 public class MainActivity extends AppCompatActivity {
-
     private BannerViewPager mBannerViewPager;
     private EditText mEditText;
     private Button mButton;
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         mBannerViewPager = ((BannerViewPager) findViewById(R.id.bannerViewPager));
         mEditText = ((EditText) findViewById(R.id.ed_text));
         mButton = ((Button) findViewById(R.id.bt));
+
         mBannerViewPager.setAdapter(new BannerAdapter() {
             @Override
             public View getView(int position) {
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
     InputFilter inputFilter = new InputFilter() {
-
         Pattern pattern = Pattern.compile("[^a-zA-Z0-9\\u4E00-\\u9FA5_]");
 
         @Override
