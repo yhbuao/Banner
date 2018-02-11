@@ -1,4 +1,4 @@
-package haibo.bannerdemo.banner;
+package haibo.library.banner;
 
 import android.app.Activity;
 import android.app.Application;

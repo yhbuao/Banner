@@ -1,4 +1,4 @@
-package haibo.bannerdemo.banner;
+package haibo.library.banner;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import haibo.bannerdemo.R;
+import haibo.library.R;
 
 /**
  * @author: yuhaibo

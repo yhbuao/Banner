@@ -1,4 +1,4 @@
-package haibo.bannerdemo.banner;
+package haibo.library.banner;
 
 import android.content.Context;
 import android.view.animation.Interpolator;
