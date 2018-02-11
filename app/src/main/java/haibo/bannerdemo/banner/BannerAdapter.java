@@ -10,5 +10,26 @@ import android.view.View;
  */
 
 public abstract class BannerAdapter {
-    public abstract View getView(int position);
+    /**
+     * 根据position来获取ViewPager中的子view
+     *
+     * @param position
+     * @return
+     */
+    public abstract View getView(int position,View convertView);
+
+    /**
+     * 获取轮播的数量
+     */
+    public abstract int getCount();
+
+    /**
+     * 根据位置获取广告的描述
+     *
+     * @param position
+     * @return
+     */
+    public String getBannerDesc(int position) {
+        return "";
+    }
 }
