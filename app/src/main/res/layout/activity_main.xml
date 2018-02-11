@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="haibo.bannerdemo.MainActivity">
 
-    <haibo.bannerdemo.banner.BannerViewPager
-        android:id="@+id/bannerViewPager"
+    <haibo.library.banner.BannerView
+        android:id="@+id/bannerView"
         android:layout_width="match_parent"
-        android:layout_height="140dp">
-
-    </haibo.bannerdemo.banner.BannerViewPager>
+        android:layout_height="0dp"
+        app:dotDistance="10dp"
+        app:dotGravity="center"
+        app:dotIndicatorFocus="#bec411"
+        app:dotIndicatorNormal="#17c640"
+        app:dotSize="8dp"
+        app:heightProportion="3"
+        app:widthProportion="8">
+    </haibo.library.banner.BannerView>
 
     <EditText
         android:id="@+id/ed_text"
