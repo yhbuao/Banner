@@ -21,9 +21,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import haibo.library.banner.BannerAdapter;
-import haibo.library.banner.BannerView;
-import haibo.library.banner.BannerViewPager;
+import haibo.bannerdemo.banner.BannerAdapter;
+import haibo.bannerdemo.banner.BannerView;
+import haibo.bannerdemo.banner.BannerViewPager;
+
 
 /**
  * @author User

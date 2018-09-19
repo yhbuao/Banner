@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="haibo.bannerdemo.MainActivity">
 
-    <haibo.library.banner.BannerView
+    <haibo.bannerdemo.banner.BannerView
         android:id="@+id/bannerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -19,7 +19,7 @@
         app:dotSize="8dp"
         app:heightProportion="3"
         app:widthProportion="8">
-    </haibo.library.banner.BannerView>
+    </haibo.bannerdemo.banner.BannerView>
 
     <EditText
         android:id="@+id/ed_text"
