@@ -113,4 +113,5 @@ public class BannerBean {
             }
         }
     }
+    //1
 }
