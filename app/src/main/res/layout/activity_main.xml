@@ -13,6 +13,7 @@
         android:layout_height="0dp"
         app:dotDistance="10dp"
         app:dotGravity="center"
+
         app:dotIndicatorFocus="#bec411"
         app:dotIndicatorNormal="#17c640"
         app:dotSize="8dp"
